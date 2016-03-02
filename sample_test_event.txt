@@ -1,0 +1,14 @@
+{  
+   "Records":[  
+      {  
+         "s3":{  
+            "bucket":{  
+               "name":[YOUR S3 BUCKET NAME],
+            },
+            "object":{  
+               "key":"development/image_original/lena.jpg",
+            }
+         }
+      }
+   ]
+}
