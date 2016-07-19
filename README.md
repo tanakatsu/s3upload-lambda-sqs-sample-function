@@ -1,4 +1,4 @@
-# S3Upload-Lambda-SQS-sample
+# S3Upload-Lambda-SQS-sample (Lambda function)
 
 ### Deployment
 
@@ -21,3 +21,7 @@ Then,
 ```
 node CreateThumbsWithMessage_driver.js
 ```
+
+### Related project
+
+[https://github.com/tanakatsu/s3upload-lambda-sqs-sample-rails](https://github.com/tanakatsu/s3upload-lambda-sqs-sample-rails)
