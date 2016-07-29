@@ -4,6 +4,7 @@ var AWS = require('aws-sdk');
 var gm = require('gm').subClass({ imageMagick: true });
 var util = require('util');
 var path = require('path');
+var inkjet = require('inkjet');
 
 // load envirnment variables
 require('dotenv').config();
@@ -36,7 +37,7 @@ exports.handler = function(event, context) {
   var srcKeyPrefix = srcKey.split('/')[1]; // development/image_original/1.jpg -> image_original
   var targetParams = [[256, "image_thumb_l"], [128, "image_thumb_s"]]; // pair of (size, prefix)
   targetParams = targetParams.map(function(p) { 
-    p.push(srcKey.replace(srcKeyPrefix, p[1]));
+    p.push(srcKey.replace(srcKeyPrefix, p[1])); // (size, prefix) => (size, prefix, path)
     return p;
   });
   var dstKeys = targetParams.map(function(p) { return p[2] });
@@ -77,7 +78,19 @@ exports.handler = function(event, context) {
         if (err) {
           done(err);
         } else {
-          done(null, data);
+          // Getting EXIF tags
+          inkjet.exif(data.Body, function(err, metadata) {
+            // metadata -- an object that map EXIF tags to string value
+            if (err) {
+              done(err);
+            } else {
+              console.log('EXIF tags', metadata);
+              if (metadata["DateTime"]) {
+                imageInfo["datetime"] = metadata["DateTime"]["value"];
+              }
+              done(null, data);
+            }
+          });
         }
       });
     },
