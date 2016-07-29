@@ -26,6 +26,8 @@ function getId(key) {
 }
 
 exports.handler = function(event, context) {
+  console.log("version=", process.env.DEPLOYED_AT);
+
   // Read options from the event.
   console.log("Reading options from event:\n", util.inspect(event, {depth: 5}));
 

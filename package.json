@@ -11,9 +11,11 @@
     "inkjet": "^2.0.2"
   },
   "devDependencies": {
+    "date-utils": "^1.2.21",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-install": "^0.6.0",
+    "gulp-replace": "^0.5.4",
     "gulp-zip": "^3.2.0",
     "node-aws-lambda": "^0.1.7",
     "run-sequence": "^1.1.5"

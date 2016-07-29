@@ -1,9 +1,11 @@
 var gulp = require('gulp');
 var zip = require('gulp-zip');
+var replace = require('gulp-replace');
 var del = require('del');
 var install = require('gulp-install');
 var runSequence = require('run-sequence');
 var awsLambda = require('node-aws-lambda');
+require('date-utils');
 
 var mainJsFile = 'CreateThumbsWithMessaging.js'; // Lambdaファンクションの本体
 var dotEnvFile = '.env';
@@ -18,10 +20,15 @@ gulp.task('js', function() {
   return gulp.src(mainJsFile)
     .pipe(gulp.dest('dist/'));
 });
- 
+
 // .envファイルをdistディレクトリにコピー
 gulp.task('dotenv', function() {
+  // デプロイ日時を環境変数に追加
+  var dt = new Date();
+  var deployed_at = 'DEPLOYED_AT=' + dt.toFormat("YYYY/MM/DD HH24:MI:SS");
+
   return gulp.src(dotEnvFile)
+    .pipe(replace(/DEPLOYED_AT=.*/, deployed_at))
     .pipe(gulp.dest('dist/'));
 });
  
